@@ -5,6 +5,8 @@
 // 👇 COMPLETE YOUR WORK BELOW 👇
 */
 
+// const { starships } = require("./data/fixtures-bundle");
+
 /**
  * ### Challenge `getName`
  * Example ✅
@@ -30,7 +32,7 @@ function getName(character) {
  */
 function getFilmCount(character) {
   // TODO: Add your code inside the functions (others below).
-
+  return character.films.length
 }
 
 /**
@@ -43,6 +45,9 @@ function getFilmCount(character) {
 */
 function getSecondStarshipName(character) {
   // TODO: Add your code here.
+  console.log(character);
+  if (character.starships.length === 0) return "none";
+  return character.starships[1].name;
 }
 
 /**
@@ -56,6 +61,7 @@ function getSecondStarshipName(character) {
  */
 function getSummary(character) {
   // TODO: Add your code here.
+  return `${character.name}, ${character.height}cm, ${character.mass}kg. Featured in ${character.films.length} films.`
 }
 
 /**
@@ -68,8 +74,12 @@ function getSummary(character) {
 */
 function getVehiclesCostInCreditsSumTotal(character) {
   // TODO: Add your code here.
+  var sum = 0;
+  character.vehicles.forEach(vehicle => {
+    sum += vehicle.cost_in_credits;
+  });
+  return sum;
 }
-
 /**
  * ### Challenge `getStarshipPassengerAndCrewSumTotal`
  * MVP Challenge 🤓
@@ -82,6 +92,12 @@ function getVehiclesCostInCreditsSumTotal(character) {
 */
 function getStarshipPassengerAndCrewSumTotal(character) {
   // TODO: Add your code here.
+  var sum = 0;
+  character.starships.forEach(starship => {
+    sum += starship.crew 
+    sum += starship.passengers;
+  });
+  return sum;
 }
 
 /**
@@ -99,6 +115,7 @@ function getStarshipPassengerAndCrewSumTotal(character) {
 */
 function getNthFilm(character, filmNumber) {
   // TODO: Add your code here.
+  return character.films[filmNumber - 1];
 }
 
 /**
@@ -113,6 +130,16 @@ function getNthFilm(character, filmNumber) {
 */
 function getCargoCapacityTotal(character) {
   // TODO: Add your code here.
+  var sum = 0;
+  character.starships.forEach(starship => {
+    if (starship.cargo_capacity === null) return;
+    sum += parseInt(starship.cargo_capacity);
+  });
+  character.vehicles.forEach(vehicle => {
+    if (vehicle.cargo_capacity === null) return;
+    sum += parseInt(vehicle.cargo_capacity);
+  })
+  return sum;
 }
 
 /**
@@ -128,6 +155,15 @@ function getCargoCapacityTotal(character) {
 */
 function getFastestStarshipName(character) {
   // TODO: Add your code here.
+  var fastestStarshipName = "none";
+  var fastestStarshipSpeed = 0;
+  character.starships.forEach(starship => {
+    if (starship.max_atmosphering_speed > fastestStarshipSpeed) {
+      fastestStarshipName = starship.name;
+      fastestStarshipSpeed = starship.max_atmosphering_speed;
+    }
+  })
+  return fastestStarshipName;
 }
 
 /**
@@ -143,6 +179,15 @@ function getFastestStarshipName(character) {
 */
 function getLargestCargoStarshipModelName(character) {
   // TODO: Add your code here.
+  var starshipMaxCapacity = 0;
+  var maxStarship = {model: "none"};
+  character.starships.forEach(starship => {
+    if (starship.cargo_capacity >= starshipMaxCapacity) {
+      maxStarship = starship;
+      starshipMaxCapacity = starship.cargo_capacity;
+    }
+  });
+  return maxStarship.model;
 }
 
 /**
@@ -157,6 +202,21 @@ function getLargestCargoStarshipModelName(character) {
 */
 function getSlowestVehicleOrStarshipName(character) {
   // TODO: Add your code here.
+  var slowestName = "none";
+  var slowestSpeed = 999999999999999;
+  character.starships.forEach(starship => {
+    if (starship.max_atmosphering_speed < slowestSpeed) {
+      slowestName = starship.name;
+      slowestSpeed = starship.max_atmosphering_speed;
+    }
+  })
+  character.vehicles.forEach(vehicle => {
+    if (vehicle.max_atmosphering_speed < slowestSpeed) {
+      slowestName = vehicle.name;
+      slowestSpeed = vehicle.max_atmosphering_speed;
+    }
+  })
+  return slowestName;
 }
 
 
